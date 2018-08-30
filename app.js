@@ -3,17 +3,32 @@ console.log('starting notes');
 const fs = require('fs');
 const os = require('os');
 const _= require('lodash');
-const notes = require('./notes');
-//console.log('result:' , notes.add(9,-3));
-console.log(_.isString(true));
-console.log(_.isString('verint'));
-/*const ad =
-fs.appendFile('greetings.txt', 'Hello ${user.username}!',(err)=> {
-  if(err) throw err;
-  console.log('the "data to append" was appended to file!' );
-});
-*/
-//console.log(notes);
+const yargs = require('yargs');
 
-var filteredArray =_.uniq([1,2,3,3,3,1,1,2,2,'verint',1,2,3,'verint']);
-console.log(filteredArray);
+const notes = require('./notes');
+
+ const argv = yargs.argv;
+ var command = process.argv[2];
+console.log('command:', command);
+
+console.log('Yargs', argv);
+
+
+
+
+ if(command == 'add'){
+   notes.addNote(argv.tittle, argv.body);
+ }
+  else if (command === "list"){
+    notes.getAll();
+  } else if (command === 'read'){
+    notes.getNote(argv.title);
+  }
+  else if (command === 'remove'){
+   notes.removeNote(argv.title);
+ }
+  else {
+  console.log("i do not recognize the command!");
+
+
+};
